@@ -1,20 +1,18 @@
+import option
+
 class Stock():
-  def __init__(self, name, symbol):
-    self.name = name
-    self.symbol = symbol
+    def __init__(self, name, symbol):
+	self.name = name
+	self.symbol = symbol
+	self.price = 0
+	self.volatility = 0
+	self._option = []
     
     
-  def setPrice(self, price):
-    self.price = price
-    
-    
-  def getPrice(self):
-    return self.price
-
-
-  def setVolatility(self, volatility):
-    self.volatility = volatility
-    
-    
-  def getVolatility(self):
-    return self.volatility
+    def addOption(self, optSymbol, strike, expirationDate):
+	newOption = option.Option(optSymbol, strike, expirationDate)
+	self._option.append(newOption)
+	
+	
+    def getOptions(self):
+	return self._option
