@@ -6,13 +6,33 @@ class Stock():
 	self.symbol = symbol
 	self.price = 0
 	self.volatility = 0
-	self._optionObserved = []
+	self.__observedOptions = {}
+	self.__boughtOptions = {}
     
     
-    def addOption(self, optSymbol, strike, expirationDate):
+    def observeOption(self, optSymbol, strike, expirationDate):
 	newOption = option.Option(optSymbol, strike, expirationDate)
-	self._optionObserved.append(newOption)
+	self.__observedOptions[optSymbol] = newOption
+	
+
+    @property
+    def observedOptions(self):
+	return self.__observedOptions
+    
+    
+    def buyOption(self, optSymbol, price):
+	option = self.__observedOptions[optSymbol]
+	option.price = price
+	self.__boughtOptions[optSymbol] = option
+	del(self.__observedOptions[optSymbol])
 	
 	
-    def getObservedOptions(self):
-	return self._optionObserved
+    def buyOption(self, optSymbol, strike, expirationDate, price):
+	newOption = option.Option(optSymbol, strike, expirationDate, price)
+	self.__observedOptions[optSymbol] = newOption
+	
+
+    @property
+    def boughtOptions(self):
+	return self.__boughtOptions
+    
