@@ -15,4 +15,8 @@ bbas3.buyOption("BBASE74", 0.75)
 print (bbas3.observedOptions)
 print (bbas3.boughtOptions["BBASE74"].price)
 
-bbas3.buyOption("BBASE72", 24.7, datetime.date(2016, 4, 28), 0.35)
+bbas3.buyOption("BBASE72", 0.35, 24.7, datetime.date(2016, 4, 28))
+print (bbas3.boughtOptions)
+
+bbas3.observeOption("BBASE70", 20, datetime.date(2016, 4, 28))
+bbas3.buyOption("BBASE70", 2.45, 20, datetime.date(2016, 4, 28))
