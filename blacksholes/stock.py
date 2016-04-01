@@ -30,8 +30,8 @@ class Stock():
 	    del(self.__observedOptions[optSymbol])
 	else: # We are buying a new option that was not being observed.
 	    # Check to see if option actually is not in observed list
-	    #if self.__observedOptions.has_key(optSymbol):
-		#raise buyError("Option is already in observed list")
+	    if self.__observedOptions.has_key(optSymbol):
+		raise buyError("Option is already in observed list")
 	    newOption = option.Option(optSymbol, strike, expirationDate, price)
 	    self.__boughtOptions[optSymbol] = newOption
 	
@@ -39,4 +39,9 @@ class Stock():
     @property
     def boughtOptions(self):
 	return self.__boughtOptions
+    
+ 
+class buyError(StandardError):
+    """Exception raised for errors when buying a market item."""
+    pass
     
