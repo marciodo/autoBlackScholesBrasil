@@ -1,9 +1,19 @@
 import datetime
+import re
+from enum import Enum
+
+
+class optionType(Enum):
+    CALL = 0
+    PUT = 1
 
 
 class Option():
     def __init__(self, symbol, strike, expirationDate, price=0.0):
         if isinstance(symbol, basestring):
+            if re.match("[a-zA-Z]{4}[a-xA-X][0-9]{2}", symbol) is None:
+                raise ValueError("symbol must have the format cccccnn",
+                                 ", c meaning character and n a number.")
             self.symbol = symbol
         else:
             raise TypeError("symbol must be a string with the format cccccnn",
@@ -20,3 +30,8 @@ class Option():
             self.price = price
         else:
             raise TypeError("price must be a number.")
+
+        if self.symbol[4:5].upper() < 'M':
+            self.type = optionType.CALL
+        else:
+            self.type = optionType.PUT
