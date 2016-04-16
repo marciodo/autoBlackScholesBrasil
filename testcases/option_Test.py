@@ -1,12 +1,7 @@
 import unittest
 import datetime
-# from enum import Enum
 from blacksholes.option import Option
 from blacksholes.option import optionType
-
-""" TODO:
-    - Regular expression in option symbol
-"""
 
 
 class OptionTest(unittest.TestCase):
