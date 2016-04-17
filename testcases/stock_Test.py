@@ -2,13 +2,8 @@
 import unittest
 import datetime
 from blacksholes.stock import Stock
-
-""" Test list:
-- Buy an unobserved option
-- Observe 2 equal options
-- Buy 2 equal options
-- Try to buy observed option that does not exist
-"""
+from blacksholes.stock import ObserveError
+from blacksholes.stock import BuyError
 
 
 class StockTest(unittest.TestCase):
@@ -54,3 +49,22 @@ class StockTest(unittest.TestCase):
         self.assertEqual(10.34, cvcb3.boughtOptions["CVCBV19"].strike)
         self.assertEqual(datetime.date(2016, 10, 19),
                          cvcb3.boughtOptions["CVCBV19"].expirationDate)
+
+    def test_observeAnAlreadyObservedOption(self):
+        tecn3 = Stock("Technos", "TECN3")
+        tecn3.observeOption("TECNN45", 4.5, datetime.date(2013, 12, 23))
+        self.assertRaises(ObserveError, tecn3.observeOption, "TECNN45", 4.7,
+                          datetime.date(2015, 12, 21))
+
+    def test_buyAnAlreadyObservedOptionLikeItWasNot(self):
+        bsrs6 = Stock("Banco do Rio Grande do Sul", "BSRS6")
+        bsrs6.observeOption("BRSRX12", 12.0, datetime.date(2020, 12, 20))
+        self.assertRaises(BuyError, bsrs6.buyOption, "BRSRX12", 0.32, 11.8,
+                          datetime.date(2017, 12, 19))
+
+    def test_buyAnUnobservedOptionLikeItWasObserved(self):
+        eter3 = Stock("Eternit", "ETER3")
+        self.assertRaises(BuyError, eter3.buyOption, "ETERA89", 0.67)
+
+    #def test_optionDictIncreaseInSize(self):
+        
