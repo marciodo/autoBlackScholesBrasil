@@ -1,9 +1,9 @@
 # coding: utf-8
 import unittest
 import datetime
-from blacksholes.stock import Stock
-from blacksholes.stock import ObserveError
-from blacksholes.stock import BuyError
+from blackscholes.stock import Stock
+from blackscholes.stock import ObserveError
+from blackscholes.stock import BuyError
 
 
 class StockTest(unittest.TestCase):

@@ -1,7 +1,7 @@
 import unittest
 import datetime
-from blacksholes.option import Option
-from blacksholes.option import optionType
+from blackscholes.option import Option
+from blackscholes.option import optionType
 
 
 class OptionTest(unittest.TestCase):
