@@ -65,6 +65,3 @@ class StockTest(unittest.TestCase):
     def test_buyAnUnobservedOptionLikeItWasObserved(self):
         eter3 = Stock("Eternit", "ETER3")
         self.assertRaises(BuyError, eter3.buyOption, "ETERA89", 0.67)
-
-    #def test_optionDictIncreaseInSize(self):
-        
