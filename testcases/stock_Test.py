@@ -65,3 +65,6 @@ class StockTest(unittest.TestCase):
     def test_buyAnUnobservedOptionLikeItWasObserved(self):
         eter3 = Stock("Eternit", "ETER3")
         self.assertRaises(BuyError, eter3.buyOption, "ETERA89", 0.67)
+
+if __name__ == '__main__':
+    unittest.main()

@@ -16,8 +16,8 @@ class OptionTest(unittest.TestCase):
         self.assertEqual(option.type, optionType.CALL)
 
     def test_createOptionWithPrice(self):
-        option = Option('BBDCo23', 15.2, datetime.date(2015, 3, 15), 0.75)
-        self.assertEqual(option.symbol, 'BBDCo23')
+        option = Option('BBDCo2', 15.2, datetime.date(2015, 3, 15), 0.75)
+        self.assertEqual(option.symbol, 'BBDCo2')
         self.assertEqual(option.strike, 15.2)
         self.assertEqual(option.expirationDate,
                          datetime.date(2015, 3, 15))

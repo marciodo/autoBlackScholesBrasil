@@ -3,6 +3,8 @@ Automate calculations with options in Brazilian stock market / Automatiza o cál
 
 Additional Python packages:
 pip install enum
+apt-get install python-dev
+pip install numpy
 
 For running test cases it will be needed the installation of nosetest and optionally rednose:
 sudo pip install nose

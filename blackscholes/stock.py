@@ -23,7 +23,7 @@ class Stock():
     def buyOption(self, optSymbol, price, strike=None, expirationDate=None):
         if strike is None and expirationDate is None:
             if optSymbol not in self.__observedOptions:
-                raise BuyError("Option is not being oberved. Please tell us ",
+                raise BuyError("Option is not being oberved. Please tell us "
                                "its strike and expiration date.")
             # So, we are buying an option that is already inside our list
             # of observed options.
