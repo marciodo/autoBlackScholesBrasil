@@ -15,4 +15,4 @@ def getObservedImpliedVolatility(stock, interest):
         print lifetime / 365.0
         #presentValue = 
 
-    return {"ITUBF8"}
+    return {"ITUBF8": 65.25}

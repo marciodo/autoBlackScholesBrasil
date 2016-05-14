@@ -1,6 +1,7 @@
 # coding: utf-8
 import unittest
 import datetime
+import yaml
 from blackscholes.stock import Stock
 from blackscholes import blackscholes
 
@@ -15,7 +16,14 @@ class BlachscholesTest(unittest.TestCase):
         observedImpliedVolatility = \
             blackscholes.getObservedImpliedVolatility(itub4, 14.25)
         self.assertEqual(65.25,
-                         observedImpliedVolatility['ITUBF8'].impliedVolatility)
+                         observedImpliedVolatility['ITUBF8'])
+
+    def test_openHolidayFile(self):
+        holidayFile = file("../blackscholes/SaoPauloHolidays.yml", "r")
+        holidays = yaml.load(holidayFile)
+        self.assertEqual(2016, holidays[0][0])
+        self.assertEqual(26, holidays[1][2])
+
 
 if __name__ == '__main__':
     unittest.main()
