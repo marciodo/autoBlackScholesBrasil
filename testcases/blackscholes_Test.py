@@ -19,10 +19,11 @@ class BlachscholesTest(unittest.TestCase):
                          observedImpliedVolatility['ITUBF8'])
 
     def test_openHolidayFile(self):
-        holidayFile = file("../blackscholes/SaoPauloHolidays.yml", "r")
-        holidays = yaml.load(holidayFile)
-        self.assertEqual(2016, holidays[0][0])
-        self.assertEqual(26, holidays[1][2])
+        #holidayFile = file("../blackscholes/SaoPauloHolidays.yml", "r")
+        #holidays = yaml.load(holidayFile)
+        self.assertEqual(datetime.date(2001, 1, 1), blackscholes.holidays[0])
+        self.assertEqual(datetime.date(2078, 12, 25),
+                         blackscholes.holidays[935])
 
 
 if __name__ == '__main__':
