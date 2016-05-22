@@ -1,10 +1,13 @@
 from datetime import date
+import datetime
 import numpy
 import pkg_resources
 import yaml
 import scipy.stats
+from option import optionType
+from numpy import datetime64
 
-# Read holiday file once when the import is done to reduce time
+# Read holiday file once when the import is done, to reduce time
 resource_package = __name__
 try:
     holidayFile = pkg_resources.resource_string(resource_package,
@@ -19,34 +22,40 @@ finally:
         month = holidayStr[1]
         day = holidayStr[2]
         holidays.append(date(year, month, day))
+        #print datetime64(str(year) + "-0" + str(month) + "-0" + str(day))
 
 
-def getObservedImpliedVolatility(stock, interest):
+def calcExpectedPrices(stock, interest):
+    prices = {}
+    interest /= 100.0
+    histVolatility = stock.volatility / 100.0
+
     for observedOption in stock.observedOptions:
-        interest /= 100.0
         option = stock.observedOptions[observedOption]
         strike = option.strike
         expirationDate = option.expirationDate
-        histVolatility = stock.volatility / 100.0
 
-        #holiday = [date(2016, 5, 16), date(2016, 9, 7)]
-
-        lifetime = numpy.busday_count(date.today(), expirationDate,
+        lifetime = numpy.busday_count(date.today(), expirationDate +
+                                      datetime.timedelta(days=1),
                                       '1111100', holidays)
-        lifetime += 1
-        lifetime /= 252.
-        print lifetime
+        lifetime /= 252.0
+
         presentValue = strike * numpy.exp(-interest * lifetime)
-        print presentValue
         stHalf = histVolatility * numpy.power(lifetime, 0.5)
-        print stHalf
         d1 = (numpy.log(stock.price / strike) +
               (interest + histVolatility * histVolatility / 2) * lifetime) / \
             stHalf
-        print d1
         d2 = d1 - stHalf
-        print d2
-        delta = scipy.stats.norm(0, 1).cdf(d1)
+        delta = scipy.stats.norm.cdf(d1)
         print delta
+        norm_d2_PV = scipy.stats.norm.cdf(d2) * presentValue
+        print norm_d2_PV
+        callExpectedPrice = round(delta * stock.price - norm_d2_PV, 2)
+        if option.type == optionType.PUT:
+            putExpectedPrice = round(callExpectedPrice + presentValue -
+                                     stock.price, 2)
+            prices[option.symbol] = putExpectedPrice
+        else:
+            prices[option.symbol] = callExpectedPrice
 
-    return {"ITUBF8": 65.25}
+    return prices
