@@ -1,6 +1,7 @@
 import datetime
 import re
 from enum import Enum
+from numpy import datetime64
 
 
 class optionType(Enum):
@@ -24,10 +25,10 @@ class Option():
             self.strike = strike
         else:
             raise TypeError("strike must be a number.")
-        if isinstance(expirationDate, datetime.date):
+        if isinstance(expirationDate, datetime64):
             self.expirationDate = expirationDate
         else:
-            raise TypeError("expirationDate must be a date.")
+            raise TypeError("expirationDate must be a numpy datetime64.")
         if isinstance(price, float):
             self.price = price
         else:
