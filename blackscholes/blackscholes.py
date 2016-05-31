@@ -12,19 +12,14 @@ from numpy import timedelta64
 resource_package = __name__
 try:
     holidayFile = pkg_resources.resource_string(resource_package,
-                                                'SaoPauloHolidays_numpy.yml')
+                                                'SaoPauloHolidays.yml')
     holidaysStr = yaml.load(holidayFile)
 except:
     print('Holiday file not found.')
 finally:
     holidays = []
     for holidayStr in holidaysStr:
-        #year = holidayStr[0]
-        #month = holidayStr[1]
-        #day = holidayStr[2]
-        #holidays.append(date(year, month, day))
         holidays.append(datetime64(holidayStr))
-        #print datetime64(str(year) + "-0" + str(month) + "-0" + str(day))
 
 
 def calcExpectedPrices(stock, interest):

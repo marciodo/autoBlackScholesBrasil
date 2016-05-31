@@ -11,9 +11,6 @@ from numpy import datetime64
 class BlachscholesTest(unittest.TestCase):
 
     def test_openHolidayFile(self):
-        #self.assertEqual(datetime.date(2001, 1, 1), blackscholes.holidays[0])
-        #self.assertEqual(datetime.date(2078, 12, 25),
-        #                 blackscholes.holidays[935])
         self.assertEqual(datetime64('2001-01-01'), blackscholes.holidays[0])
         self.assertEqual(datetime64('2078-12-25'),
                          blackscholes.holidays[935])
@@ -22,6 +19,8 @@ class BlachscholesTest(unittest.TestCase):
         itub4 = Stock('Itaú', 'ITUB4')
         itub4.price = 30.08
         itub4.volatility = 49.25
+        # For automatic test purposes we need to calculate the expiration date
+        # from today to get the same result every time.
         businessDays = 19
         expirationDate = busday_offset(datetime.date.today(), businessDays,
                                        'backward', '1111100',
@@ -35,6 +34,8 @@ class BlachscholesTest(unittest.TestCase):
         petr4 = Stock('Petrobrás', 'PETR4')
         petr4.price = 8.9
         petr4.volatility = 70.6
+        # For automatic test purposes we need to calculate the expiration date
+        # from today to get the same result every time.
         businessDays = 19
         expirationDate = busday_offset(datetime.date.today(), businessDays,
                                        'backward', '1111100',
