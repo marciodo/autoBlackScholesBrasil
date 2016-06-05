@@ -1,17 +1,26 @@
 # coding: utf-8
 import unittest
-from blackscholes import database
+from blackscholes import config
 from blackscholes.stock import Stock
 from blackscholes.option import Option
+from blackscholes import database
 from numpy import datetime64
 import yaml
+import os
+
+''' TODO:
+    Find a way to save file in any directory. It is working only in the current
+'''
 
 
 class BlachscholesTest(unittest.TestCase):
 
     def test_saveStock_noPrice_noVol_noOption(self):
         ggbr3 = Stock('Gerdau', 'GGBR3')
-        database.saveStock(ggbr3)
+        database.saveStock(ggbr3, '')
+
+        dbFile = '' + config.dbFilename
+        self.assertTrue(os.path.exists(dbFile))
 
     def test_saveObjectAsYaml(self):
         # Test of yaml generating and loading the same object
