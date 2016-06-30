@@ -29,7 +29,8 @@ class BlachscholesTest(unittest.TestCase):
         database.saveStock(fesa4, self.testPath)
 
         stream = file(self.testFile, 'r')
-        fesa4_fromFile = yaml.load(stream)
+        stockFromFile = yaml.load(stream)
+        fesa4_fromFile = stockFromFile['FESA4']
         self.assertEqual(fesa4.name, fesa4_fromFile.name)
         self.assertEqual(fesa4.symbol, fesa4_fromFile.symbol)
         self.assertEqual(fesa4.price, fesa4_fromFile.price)
@@ -47,7 +48,8 @@ class BlachscholesTest(unittest.TestCase):
         database.saveStock(suzb4, self.testPath)
 
         stream = file(self.testFile, 'r')
-        suzb4_fromFile = yaml.load(stream)
+        stockFromFile = yaml.load(stream)
+        suzb4_fromFile = stockFromFile['SUZB4']
         self.assertEqual(suzb4.name, suzb4_fromFile.name)
         self.assertEqual(suzb4.symbol, suzb4_fromFile.symbol)
         self.assertEqual(suzb4.price, suzb4_fromFile.price)
@@ -67,7 +69,8 @@ class BlachscholesTest(unittest.TestCase):
         database.saveStock(card3, self.testPath)
 
         stream = file(self.testFile, 'r')
-        card3_fromFile = yaml.load(stream)
+        stockFromFile = yaml.load(stream)
+        card3_fromFile = stockFromFile['CARD3']
         self.assertEqual(card3.name, card3_fromFile.name)
         self.assertEqual(card3.symbol, card3_fromFile.symbol)
         self.assertEqual(card3.price, card3_fromFile.price)
@@ -101,7 +104,8 @@ class BlachscholesTest(unittest.TestCase):
         database.saveStock(abcb3, self.testPath)
 
         stream = file(self.testFile, 'r')
-        abcb3_fromFile = yaml.load(stream)
+        stockFromFile = yaml.load(stream)
+        abcb3_fromFile = stockFromFile['ABCB3']
         self.assertEqual(abcb3.name, abcb3_fromFile.name)
         self.assertEqual(abcb3.symbol, abcb3_fromFile.symbol)
         self.assertEqual(abcb3.price, abcb3_fromFile.price)
@@ -128,20 +132,29 @@ class BlachscholesTest(unittest.TestCase):
 
         os.remove(self.testFile)
 
-    def test_save2Stocks(self):
+    def test_save2IndependentStocks(self):
         eter3 = Stock('Eternit', 'ETER3')
-        eter3.price = 6.23
-        eter3.volatility = 90.43
+        eter3.price = 6.33
+        eter3.volatility = 90.42
 
         brpr3 = Stock('BR Properties', 'BRPR3')
         brpr3.price = 10.32
         brpr3.volatility = 21.43
 
-        database.saveStock(eter3, '')
-        database.saveStock(brpr3, '')
+        database.saveStock(eter3, self.testPath)
+        database.saveStock(brpr3, self.testPath)
 
-        #for data in yaml.load_all(config.dbFilename):
-        #    print(data)
+        stocks = database.readStockFile(self.testPath)
+
+        self.assertEqual(eter3.price, stocks['ETER3'].price)
+        self.assertEqual(eter3.symbol, stocks['ETER3'].symbol)
+        self.assertEqual(eter3.volatility, stocks['ETER3'].volatility)
+
+        self.assertEqual(brpr3.price, stocks['BRPR3'].price)
+        self.assertEqual(brpr3.symbol, stocks['BRPR3'].symbol)
+        self.assertEqual(brpr3.volatility, stocks['BRPR3'].volatility)
+
+        os.remove(self.testFile)
 
     def test_saveObjectAsYaml(self):
         # Test of yaml generating and loading the same object

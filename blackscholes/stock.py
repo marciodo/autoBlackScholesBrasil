@@ -10,6 +10,10 @@ class Stock():
         self.__observedOptions = {}
         self.__boughtOptions = {}
 
+    def __eq__(self, other):
+        if isinstance(other, Stock):
+            return self.symbol == other.symbol
+
     def observeOption(self, optSymbol, strike, expirationDate):
         if optSymbol in self.__observedOptions:
             raise ObserveError("Option is already in observed list")
